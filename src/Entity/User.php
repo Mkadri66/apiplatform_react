@@ -13,7 +13,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ApiResource
+ * @ApiResource(
+ *      normalizationContext={
+ *          "groups"={"users_read"}
+ *      }
+ * )
  * @UniqueEntity("email", message="L'adresse mail est deja utilisé par un autre utilisateur.")
  */
 class User implements UserInterface
@@ -22,13 +26,13 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"customers_read","invoices_read","invoices_subresource"})
+     * @Groups({"customers_read","invoices_read","invoices_subresource","users_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"customers_read","invoices_read","invoices_subresource"})
+     * @Groups({"customers_read","invoices_read","invoices_subresource","users_read"})
      * @Assert\NotBlank(message="Le mail est obligatoire.")
      * @Assert\Email(message="Le format de l'adresse mail doit être valide.")
      */
@@ -48,7 +52,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"customers_read","invoices_read","invoices_subresource"})
+     * @Groups({"customers_read","invoices_read","invoices_subresource","users_read"})
      * @Assert\NotBlank(message="Le prénom est obligatoire.")
      * @Assert\Length(
      *      min=3,
@@ -60,7 +64,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"customers_read","invoices_read","invoices_subresource"})
+     * @Groups({"customers_read","invoices_read","invoices_subresource","users_read"})
      * @Assert\NotBlank(message="Le nom est obligatoire.")
      * @Assert\Length(
      *      min=3,
@@ -72,6 +76,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Customer", mappedBy="user")
+     * @Groups({"customers_read","invoices_read","invoices_subresource","users_read"})
      */
     private $customers;
 
