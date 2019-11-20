@@ -1,11 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {HashRouter, Switch, Route} from 'react-router-dom';
 
+//CSS
 require('../css/app.css');
 
+//Components
+import Navbar from './components/Navbar.jsx';
+
+
+//Pages
+import HomePage from './pages/HomePage.jsx'
+import CustomersPage from './pages/CustomersPage.jsx';
 
 const App = () => {
-    return <h1> Bonjour à tous </h1>;
+    return (
+        <HashRouter>
+            <Navbar/>
+            <main className='container pt-5'>
+                <Switch>
+                    <Route path="/customers" component={CustomersPage} />
+                    <Route path="/" component={HomePage} />
+                </Switch>
+            </main>
+        </HashRouter>
+    )
 }
 
 
