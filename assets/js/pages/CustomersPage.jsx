@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import Pagination from '../components/Pagination'
 import axios from 'axios';
 
 
 const CustomersPage = (props) => {
 
-    const [customers, setCustomers] = useState([]);
+    const [customers, setCustomers] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/customers')
@@ -12,6 +14,28 @@ const CustomersPage = (props) => {
             .then(data => setCustomers(data))
             .catch(error => console.log(error.response))        
     }, [])
+
+    const handleDelete = (id)  => {
+        const originalCustomers = [...customers]
+
+        setCustomers(customers.filter(customer => customer.id !== id))
+
+        axios.delete(`http://localhost:8000/api/customers/${id}`)
+            .then(response => console.log("ok"))
+            .catch(error => {
+                // si il y a une erreur on recupere l'ancien state
+                setCustomers(originalCustomers)
+                console.log(error)
+            })
+    }
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page)
+    }
+
+    const itemsPerPage = 8
+
+    const paginatedCustomers = Pagination.getData(customers, currentPage, itemsPerPage)
 
     return <>
         <h1>Liste des client</h1>
@@ -31,7 +55,7 @@ const CustomersPage = (props) => {
 
             <tbody>
                 { 
-                    customers.map(customer => (
+                    paginatedCustomers.map(customer => (
                             <tr key={customer.id}>
                                 <td>{customer.id}</td>
                                 <td>
@@ -44,7 +68,10 @@ const CustomersPage = (props) => {
                                 </td>
                                 <td className="text-center">{customer.totalAmount.toLocaleString()} €</td>
                                 <td>
-                                    <button className="btn btn-sm btn-danger">Supprimer</button>
+                                    <button 
+                                    onClick={() => handleDelete(customer.id)}
+                                    disabled={customer.invoices.length > 1} 
+                                    className="btn btn-sm btn-danger">Supprimer</button>
                                 </td>
                             </tr>
                         )
@@ -52,6 +79,12 @@ const CustomersPage = (props) => {
                 }
             </tbody>
         </table>
+        <Pagination 
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            length={customers.length}
+            onPageChanged={handlePageChange}
+        />
     </>;
 }
 
