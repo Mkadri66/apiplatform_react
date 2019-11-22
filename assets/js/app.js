@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HashRouter, Switch, Route} from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+//Components
+import Navbar from './components/Navbar.jsx';
+import CustomersPage from './pages/CustomersPage.jsx';
+//Pages
+import HomePage from './pages/HomePage.jsx';
 
 //CSS
 require('../css/app.css');
-
-//Components
-import Navbar from './components/Navbar.jsx';
-
-
-//Pages
-import HomePage from './pages/HomePage.jsx'
-import CustomersPage from './pages/CustomersPage.jsx';
 
 const App = () => {
     return (
