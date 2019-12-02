@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute.jsx'
 import AuthAPI from './services/authAPI';
 
 import AuthContext from './contexts/AuthContext'
+import CustomerPage from './pages/CustomerPage.jsx';
 
 // Verifie si l'utilisateur à un token valide
 AuthAPI.setup();
@@ -35,6 +36,7 @@ const App = () => {
                 <NavBarWithRouter/>
                 <main className='container pt-5'>
                     <Switch>
+                        <PrivateRoute path="/customers/:id"component={CustomerPage}/>
                         <PrivateRoute path="/customers"component={CustomersPage}/>
                         <PrivateRoute path="/invoices"component={InvoicesPage}/>
                         <Route path="/login" component={LoginPage} />

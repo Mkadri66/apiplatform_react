@@ -117,12 +117,10 @@ const InvoicesPage = (props) => {
                             <td>
                                 <button
                                     onClick={() => handleDelete(invoice.id)}
-                                    // disabled={customer.invoices.length > 1}
                                     className="btn btn-sm btn-primary mr-1">Editer
                                 </button>
                                 <button
                                     onClick={() => handleDelete(invoice.id)}
-                                    // disabled={customer.invoices.length > 1}
                                     className="btn btn-sm btn-danger">Supprimer
                                 </button>
                             </td>
