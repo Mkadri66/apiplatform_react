@@ -34,14 +34,15 @@ const Navbar = ({history}) => {
                         {(!isAuthenticated && (
                             <>
                                 <li className="nav-item">
-                                    <NavLink to="/register" className="nav-link"> Inscription</NavLink>
-                                </li>                        <li className="nav-item">
-                                    <NavLink to="/login"className="btn btn-success"> Connexion</NavLink>
+                                    <NavLink to="/register" className="nav-link">Inscription</NavLink>
+                                </li>                       
+                                <li className="nav-item">
+                                    <NavLink to="/login"className="btn btn-success">Connexion</NavLink>
                                 </li>
                             </>
                             )) || (
                                 <li className="nav-item">
-                                    <button onClick={handleLogout}className="btn btn-danger"> Déconnexion</button>
+                                    <button onClick={handleLogout}className="btn btn-danger">Déconnexion</button>
                                 </li>
                         )}
                     </ul>
