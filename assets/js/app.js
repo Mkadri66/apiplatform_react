@@ -17,6 +17,9 @@ import AuthContext from './contexts/AuthContext'
 import CustomerPage from './pages/CustomerPage.jsx';
 import InvoicePage from './pages/InvoicePage'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // Verifie si l'utilisateur à un token valide
 AuthAPI.setup();
 
@@ -48,6 +51,7 @@ const App = () => {
                     </Switch>
                 </main>
             </HashRouter>
+            <ToastContainer position={ toast.POSITION.BOTTOM_CENTER}/>
         </AuthContext.Provider>
     )
 }

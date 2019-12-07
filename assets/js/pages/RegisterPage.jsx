@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Field from '../components/form/Field';
 
 import UsersApi from '../services/usersAPI'
+import { toast } from 'react-toastify';
 
 const  RegisterPage = ({ history }) => {
 
@@ -34,7 +35,8 @@ const  RegisterPage = ({ history }) => {
         const apiErrors = {}
 
         if(user.password !== user.passwordConfirm){
-            apiErrors.passwordConfirm = "Les deux mots de passe doivent être identiques. "
+            apiErrors.passwordConfirm = "Les deux mots de passe doivent être identiques."
+            toast.error("Il y'a des erreurs dans vos informations.")
             setErrors(apiErrors)
             return
         }
@@ -42,7 +44,8 @@ const  RegisterPage = ({ history }) => {
         try {
             const response = await UsersApi.register(user)
             setErrors({})  
-            // En cas de succes on redirige vers la page de connexion       
+            toast.success("Inscription réussie.")
+            // En cas de succes on redirige vers la page de connexion
             history.replace("/login")
         } catch ({response}){
             const {violations} = response.data
@@ -51,8 +54,9 @@ const  RegisterPage = ({ history }) => {
                     apiErrors[propertyPath] = message
                 })
                 setErrors(apiErrors)
+
             }
-            
+            toast.error("Il y'a des erreurs dans vos informations.")
         }
     }
 

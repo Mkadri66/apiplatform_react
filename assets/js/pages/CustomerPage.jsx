@@ -3,6 +3,8 @@ import Field from '../components/form/Field';
 import { Link } from 'react-router-dom';
 import CustomersAPI from '../services/customersAPI'
 import customersAPI from '../services/customersAPI';
+import { toast } from 'react-toastify';
+import FormContentLoader from '../components/loader/FormContentLoader'
 
 const CustomerPage = ({match, history}) => {
 
@@ -25,12 +27,15 @@ const CustomerPage = ({match, history}) => {
     
     const [editing, setEditing] = useState(false)
 
+    const [loading, setLoading] = useState(false)
+
     // Recuperer le customer à modifier
     const fetchCustomer = async (id) => {
         try {
             const {lastName, firstName, email, company }= await CustomersAPI.find(id)
             // mise à jour du state
             setCustomer({lastName, firstName, email, company})
+            setLoading(false)
         } catch(error){
             history.replace('/customers')
         }
@@ -39,6 +44,7 @@ const CustomerPage = ({match, history}) => {
     useEffect(() => {
         // si on est en mode modification, on recupere le customer 
         if(id !== "new"){
+            setLoading(true)
             setEditing(true)
             fetchCustomer(id)
         }
@@ -56,14 +62,15 @@ const CustomerPage = ({match, history}) => {
         event.preventDefault();
 
         try{
+            setErrors({})
             if(editing){
                 await customersAPI.update(id, customer)
             } else {
                 await customersAPI.create(customer)
+                toast.success("La création du client a bien été effectuée.")
                 // on redirige vers la page customers
                 history.replace("/customers")
             }
-            setErrors({})
         } catch ({response}){
             const {violations} = response.data
             if(violations){
@@ -73,13 +80,16 @@ const CustomerPage = ({match, history}) => {
                 })
                 setErrors(apiErrors)
             }
-            
+            toast.error("Il y'a des erreurs dans vos informations.")
         }
     }
 
     return ( 
         <>
             {!editing && <h1>Création d'un client</h1> || <h1>Modification du client </h1>}
+            {loading && <FormContentLoader/>}
+
+            {!loading && (
             <form onSubmit={handleSubmit}>
                 <Field 
                     name="lastName"
@@ -117,7 +127,7 @@ const CustomerPage = ({match, history}) => {
                     <button type="submit" className="btn btn-primary">Enregistrer</button>
                     <Link to="/customers" className="ml-4">Retour à la liste</Link>
                 </div>
-            </form>
+            </form> )}
         </>
     );
 }

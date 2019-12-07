@@ -5,6 +5,8 @@ import Select from '../components/form/Select';
 
 import CustomersApi from '../services/customersAPI';
 import InvoicesApi from '../services/invoicesAPI';
+import { toast } from 'react-toastify';
+import FormContentLoader from '../components/loader/FormContentLoader';
 
 const InvoicePage = ({history, match }) => {
     
@@ -26,14 +28,18 @@ const InvoicePage = ({history, match }) => {
 
     const [isEditing, setEditing] = useState(false)
 
+    const [loading, setLoading] = useState(true)
+
 
     // Recupere les customers pour la liste déroulante
     const fetchCustomers = async () => {
         try {
             const data = await CustomersApi.findAll()
             setCustomers(data)
+            setLoading(false)
 
             if(!invoice.customer) setInvoice({...invoice, customer: data[0].id })
+            
         } catch (error) {
             console.log(error.response)
             history.replace("/invoices")
@@ -45,6 +51,7 @@ const InvoicePage = ({history, match }) => {
         try {
             const {amount, customer, status} = await InvoicesApi.find(id)
             setInvoice({amount, customer: customer.id, status})
+            setLoading(false)
         } catch (error) {
             console.log(error.response)
             history.replace("/invoices")
@@ -77,8 +84,10 @@ const InvoicePage = ({history, match }) => {
         try {
             if(isEditing){
                 const response = await InvoicesApi.update(id, invoice)
+                toast.success("Modification réussie.")
             } else{
                 const data = await InvoicesApi.create(invoice)
+                toast.success("La facture à bien été créée.")
                 history.replace("/invoices")
             }
         } catch ({response}){
@@ -90,14 +99,16 @@ const InvoicePage = ({history, match }) => {
                 })
                 setErrors(apiErrors)
             }
-            
+            toast.error("Il y'a des erreurs dans vos informations.")
         }
     }
     
     return ( 
     <> 
-    {!isEditing && <h1>Création d'une facture</h1> || <h1> Modification de la facture </h1>} 
-        <form onSubmit={handleSubmit}>
+        {!isEditing && <h1>Création d'une facture</h1> || <h1> Modification de la facture </h1>} 
+        { loading && <FormContentLoader/>}
+
+        {!loading && <form onSubmit={handleSubmit}>
             <Field 
                 name="amount" 
                 label="Montant"   
@@ -136,7 +147,7 @@ const InvoicePage = ({history, match }) => {
                 <button type="submit" className="btn btn-primary">Enregistrer</button>
                 <Link to="/invoices" className="ml-4">Retour à la liste</Link>
             </div>
-        </form>
+        </form>}
     </>
     );
 }
