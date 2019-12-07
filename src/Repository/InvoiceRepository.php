@@ -29,7 +29,7 @@ class InvoiceRepository extends ServiceEntityRepository
                     ->orderBy("i.chrono", "DESC")
                     ->setMaxResults(1)
                     ->getQuery()
-                    ->getSingleScalarResult() + 1;
+                    ->getOneOrNullResult() + 1;
     }
 
     // /**
