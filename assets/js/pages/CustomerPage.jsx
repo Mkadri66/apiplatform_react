@@ -65,6 +65,7 @@ const CustomerPage = ({match, history}) => {
             setErrors({})
             if(editing){
                 await customersAPI.update(id, customer)
+                toast.success("Modification réussie.")
             } else {
                 await customersAPI.create(customer)
                 toast.success("La création du client a bien été effectuée.")

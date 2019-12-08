@@ -68,6 +68,7 @@ const InvoicePage = ({history, match }) => {
         if(id !== "new"){
             setEditing(true)
             fetchInvoice(id)
+            setLoading(false)
         }
     }, [id])
 
@@ -81,6 +82,7 @@ const InvoicePage = ({history, match }) => {
     // Gestion de la soumission du formulaire et gestion des erreurs
     const handleSubmit = async(event) => {
         event.preventDefault()
+        console.log(invoice)
         try {
             if(isEditing){
                 const response = await InvoicesApi.update(id, invoice)

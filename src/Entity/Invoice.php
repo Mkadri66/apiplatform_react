@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *           }
  *      },
  *      attributes={
- *          "order"={"sentAt": "desc"}
+ *          "order"={"chrono": "desc"}
  *      },
  *      normalizationContext={
  *          "groups"={"invoices_read"}
