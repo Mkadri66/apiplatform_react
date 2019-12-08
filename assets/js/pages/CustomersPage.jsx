@@ -18,7 +18,6 @@ const CustomersPage = (props) => {
     const fetchCustomers = async () => {
         try {
             const data = await CustomersApi.findAll()
-            console.log(data)
             setCustomers(data)
             setLoading(false)
         } catch (error) {
