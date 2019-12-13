@@ -7321,16 +7321,16 @@
         },
         {
             "name": "symfony/web-server-bundle",
-            "version": "v4.3.5",
+            "version": "v4.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/web-server-bundle.git",
-                "reference": "dc26b980900ddf3e9feade14e5b21c029e8ca92f"
+                "reference": "cf3172e6c3a1c996058b377cc92011b747607184"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/web-server-bundle/zipball/dc26b980900ddf3e9feade14e5b21c029e8ca92f",
-                "reference": "dc26b980900ddf3e9feade14e5b21c029e8ca92f",
+                "url": "https://api.github.com/repos/symfony/web-server-bundle/zipball/cf3172e6c3a1c996058b377cc92011b747607184",
+                "reference": "cf3172e6c3a1c996058b377cc92011b747607184",
                 "shasum": ""
             },
             "require": {
@@ -7376,7 +7376,7 @@
             ],
             "description": "Symfony WebServerBundle",
             "homepage": "https://symfony.com",
-            "time": "2019-08-20T14:27:59+00:00"
+            "time": "2019-11-26T03:44:44+00:00"
         }
     ],
     "aliases": [],

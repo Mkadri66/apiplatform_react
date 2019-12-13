@@ -6,6 +6,7 @@ import customersAPI from '../services/customersAPI';
 import { toast } from 'react-toastify';
 import FormContentLoader from '../components/loader/FormContentLoader'
 
+
 const CustomerPage = ({match, history}) => {
 
     // verifie si il y a un id

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import CustomersApi from '../services/customersAPI';
 import { toast } from 'react-toastify';
-import TableLoader from '../components/loader/TableLoader'
+import TableLoader from '../components/loader/TableLoader';
+import Helmet from 'react-helmet';
 
 
 
@@ -70,6 +71,11 @@ const CustomersPage = (props) => {
     const paginatedCustomers = Pagination.getData(filteredCustomers, currentPage, itemsPerPage)
 
     return <>
+        <Helmet>
+            <meta charSet="utf-8" />
+            <title>Clients</title>
+            <meta name="description" content="Cette page liste les clients. Elle permet aussi d'éditer, de modifier et supprimer un client."/>
+        </Helmet>
         <div className="d-flex justify-content-between align-items-center">
             <h1>Liste des clients</h1>
             <Link to="/customers/new" className="btn btn-primary">Créer un client</Link>
